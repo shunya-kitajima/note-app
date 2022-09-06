@@ -67,4 +67,5 @@ export const useMutateNote = () => {
       },
     }
   )
+  return { createNoteMutation, updateNoteMutation, deleteNoteMutation }
 }
