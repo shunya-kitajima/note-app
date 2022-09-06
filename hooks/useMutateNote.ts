@@ -48,4 +48,23 @@ export const useMutateNote = () => {
       },
     }
   )
+
+  const deleteNoteMutation = useMutation(
+    async (id: string) => {
+      const { data, error } = await supabase.from('notes').delete().eq('id', id)
+      if (error) throw new Error(error.message)
+      return data
+    },
+    {
+      onSuccess: () => {
+        revalidateList()
+        reset()
+        alert('Successfully completed !!')
+      },
+      onError: (err: any) => {
+        alert(err.message)
+        reset()
+      },
+    }
+  )
 }
