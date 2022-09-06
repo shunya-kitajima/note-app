@@ -50,6 +50,14 @@ export const NoteForm: React.FC = () => {
           onChange={(e) => update({ ...editedNote, content: e.target.value })}
         />
       </div>
+      <div className="my-2 flex justify-center">
+        <button
+          type="submit"
+          className="ml-2 rounded bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+        >
+          {editedNote.id ? 'Update' : 'Create'}
+        </button>
+      </div>
     </form>
   )
 }
