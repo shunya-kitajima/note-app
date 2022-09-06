@@ -25,4 +25,27 @@ export const useMutateNote = () => {
       },
     }
   )
+
+  const updateNoteMutation = useMutation(
+    async (note: EditedNote) => {
+      const { data, error } = await supabase
+        .from('notes')
+        .update({ title: note.title, content: note.content })
+        .eq('id', note.id)
+      if (error) throw new Error(error.message)
+      return data
+    },
+    {
+      onSuccess: (res) => {
+        revalidateList()
+        revalidateSingle(res[0].id)
+        reset()
+        alert('Successfully completed !!')
+      },
+      onError: (err: any) => {
+        alert(err.message)
+        reset()
+      },
+    }
+  )
 }
