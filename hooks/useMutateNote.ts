@@ -3,3 +3,26 @@ import { supabase } from '../utils/supabase'
 import useStore from '../store'
 import { revalidateList, revalidateSingle } from '../utils/revalidation'
 import { Note, EditedNote } from '../types/types'
+
+export const useMutateNote = () => {
+  const reset = useStore((state) => state.resetEditedNote)
+
+  const createNoteMutation = useMutation(
+    async (note: Omit<Note, 'id' | 'created_at' | 'comments'>) => {
+      const { data, error } = await supabase.from('notes').insert(note)
+      if (error) throw new Error(error.message)
+      return data
+    },
+    {
+      onSuccess: (res) => {
+        revalidateList()
+        reset()
+        alert('Successfully completed !!')
+      },
+      onError: (err: any) => {
+        alert(err.message)
+        reset()
+      },
+    }
+  )
+}
