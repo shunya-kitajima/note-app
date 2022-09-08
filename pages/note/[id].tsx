@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   console.log('ISR invoked - detail page')
   const { data: note } = await supabase
     .from('notes')
-    .select('* comments(*)')
+    .select('*, comments(*)')
     .eq('id', ctx.params?.id)
     .single()
   return {
