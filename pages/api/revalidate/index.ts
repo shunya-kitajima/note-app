@@ -13,7 +13,7 @@ const handler = async (
   res: NextApiResponse<Data | Msg>
 ) => {
   console.log('Revalidating notes page...')
-  if (req.query.sercret !== process.env.REVALIDATE_SECRET)
+  if (req.query.secret !== process.env.REVALIDATE_SECRET)
     return res.status(401).json({ message: 'Your secret is invalid !' })
   let revalidated = false
   try {
