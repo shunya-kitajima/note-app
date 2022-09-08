@@ -53,7 +53,7 @@ const NotePage: NextPage<StaticProps> = ({ note }) => {
         <p>{note.content}</p>
       </div>
       <ul className="my-2">
-        {note.comments.map((comment) => (
+        {note.comments?.map((comment) => (
           <CommentItem
             key={comment.id}
             id={comment.id}
