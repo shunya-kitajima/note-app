@@ -4,8 +4,17 @@ type Data = {
   revalidated: boolean
 }
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+type Msg = {
+  message: string
+}
+
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Data | Msg>
+) => {
   console.log('Revalidating notes page...')
+  if (req.query.sercret !== process.env.REVALIDATE_SECRET)
+    return res.status(401).json({ message: 'Your secret is invalid !' })
   let revalidated = false
   try {
     await res.revalidate('/notes')
